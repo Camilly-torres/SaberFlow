@@ -1,4 +1,4 @@
-const API_URL = https: "//saberflow-api-lpna.onrender.com";
+const API_URL = "https://saberflow-api-lpna.onrender.com";
 
 let currentUser = null;
 let disciplinesData = [];
