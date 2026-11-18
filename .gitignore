@@ -1,0 +1,14 @@
+# Banco de dados local
+saberflow.db
+
+# Cache do Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Configurações do VS Code
+.vscode/
+
+# Ambientes virtuais (se criar algum)
+venv/
+env/

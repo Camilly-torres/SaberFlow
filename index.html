@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SaberFlow — Plataforma de Estudos e Revisões</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- TOAST DE NOTIFICAÇÃO -->
+  <div id="toast-box" class="toast-sf" style="display:none;">
+    <i class="fa-solid fa-check"></i>
+    <span id="toast-msg">Ação realizada com sucesso.</span>
+    <button type="button" onclick="fecharToast()">×</button>
+  </div>
+
+  <!-- ================= TELA DE AUTENTICAÇÃO ================= -->
+  <main id="view-auth" class="auth">
+    <section class="auth-art">
+      <div class="auth-brand">
+        <div class="logo">
+          <span class="logo-mark"><i class="fa-solid fa-graduation-cap"></i></span>
+          <strong>Saber<span>Flow</span></strong>
+        </div>
+      </div>
+
+      <div class="floating-progress">
+        <span>Progresso semanal</span>
+        <b>78%</b>
+      </div>
+
+      <div class="community">
+        <i>AM</i><i>JS</i><i>RL</i><i>+2 mil</i>
+      </div>
+
+      <p class="overline">Aprenda no seu ritmo</p>
+      <h1>Conhecimento que flui com você.</h1>
+      <p>Planeje seus estudos, acompanhe cada conquista e mantenha o foco no que realmente importa.</p>
+
+      <div class="auth-art-footer">
+        <span>© 2026 SaberFlow</span>
+        <span>Aprender. Evoluir. Conquistar.</span>
+      </div>
+    </section>
+
+    <section class="auth-form">
+      <!-- FORM LOGIN -->
+      <div id="auth-login" class="auth-content">
+        <p class="overline">Bem-vindo de volta</p>
+        <h2>Continue sua jornada</h2>
+        <p>Acesse sua conta e retome seus estudos de onde parou.</p>
+        <form onsubmit="handleLogin(event)">
+          <label>E-mail
+            <input id="login-email" required type="email" placeholder="seuemail@exemplo.com" />
+          </label>
+          <label>
+            <span class="label-row">
+              <span>Senha</span>
+              <button type="button" class="link" onclick="switchAuth('recover')">Esqueci minha senha</button>
+            </span>
+            <span class="password">
+              <input id="login-senha" required minlength="6" type="password" placeholder="Digite sua senha" />
+              <button type="button" onclick="togglePass('login-senha')" aria-label="Mostrar senha"><i class="fa-regular fa-eye"></i></button>
+            </span>
+          </label>
+          <button class="btn-sf primary full" type="submit">Entrar <i class="fa-solid fa-arrow-right"></i></button>
+        </form>
+        <div class="or"><span>Novo por aqui?</span></div>
+        <button class="btn-sf outline full" type="button" onclick="switchAuth('register')">Criar minha conta</button>
+      </div>
+
+      <!-- FORM CADASTRO -->
+      <div id="auth-register" class="auth-content" style="display:none;">
+        <p class="overline">Comece agora</p>
+        <h2>Crie sua conta</h2>
+        <p>Organize seus estudos e avance no seu próprio ritmo.</p>
+        <form onsubmit="handleRegister(event)">
+          <label>Nome
+            <input id="reg-nome" required placeholder="Como podemos chamar você?" />
+          </label>
+          <label>E-mail
+            <input id="reg-email" required type="email" placeholder="seuemail@exemplo.com" />
+          </label>
+          <label>Senha
+            <span class="password">
+              <input id="reg-senha" required minlength="6" type="password" placeholder="Crie uma senha (mín. 6 caracteres)" />
+              <button type="button" onclick="togglePass('reg-senha')"><i class="fa-regular fa-eye"></i></button>
+            </span>
+          </label>
+          <button class="btn-sf primary full" type="submit">Cadastrar <i class="fa-solid fa-arrow-right"></i></button>
+        </form>
+        <p class="auth-return mt-3">Já tem uma conta? <button type="button" class="link" onclick="switchAuth('login')">Voltar para o login</button></p>
+      </div>
+
+      <!-- FORM RECUPERAÇÃO -->
+      <div id="auth-recover" class="auth-content" style="display:none;">
+        <p class="overline">Recupere seu acesso</p>
+        <h2>Redefinir senha</h2>
+        <p>Informe seu e-mail cadastrado e defina uma nova senha segura.</p>
+        <form onsubmit="handleRecover(event)">
+          <label>E-mail cadastrado
+            <input id="rec-email" required type="email" placeholder="seuemail@exemplo.com" />
+          </label>
+          <label>Nova senha
+            <input id="rec-senha" required minlength="6" type="password" placeholder="Nova senha" />
+          </label>
+          <button class="btn-sf primary full" type="submit">Atualizar senha <i class="fa-solid fa-arrow-right"></i></button>
+        </form>
+        <p class="auth-return mt-3"><button type="button" class="link" onclick="switchAuth('login')">Voltar para o login</button></p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= SHELL DO SISTEMA LOGADO ================= -->
+  <main id="view-app" class="app-shell" style="display:none;">
+    <header class="topbar">
+      <div class="logo" style="cursor:pointer;" onclick="navigate('overview')">
+        <span class="logo-mark"><i class="fa-solid fa-graduation-cap"></i></span>
+        <strong>Saber<span>Flow</span></strong>
+      </div>
+
+      <label class="global-search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input id="global-search-input" onkeyup="filtrarGlobal()" placeholder="Buscar disciplinas, tópicos..." />
+      </label>
+
+      <button class="profile-trigger" type="button" onclick="navigate('profile')">
+        <span id="user-initials">ES</span>
+        <b><span id="user-name-top">Estudante</span><small>Estudante</small></b>
+        <i class="fa-solid fa-arrow-right" style="font-size:12px;"></i>
+      </button>
+    </header>
+
+    <aside class="sidebar">
+      <p>Espaço de estudo</p>
+      <nav id="sidebar-nav">
+        <button data-view="overview" class="active" onclick="navigate('overview')"><i class="fa-solid fa-table-cells-large"></i> Visão geral</button>
+        <button data-view="disciplines" onclick="navigate('disciplines')"><i class="fa-solid fa-book"></i> Disciplinas</button>
+        <button data-view="reviews" onclick="navigate('reviews')"><i class="fa-regular fa-calendar"></i> Revisões</button>
+        <button data-view="performance" onclick="navigate('performance')"><i class="fa-solid fa-chart-column"></i> Desempenho</button>
+        <button data-view="history" onclick="navigate('history')"><i class="fa-regular fa-clock"></i> Histórico</button>
+        <button data-view="flashcards" onclick="navigate('flashcards')"><i class="fa-regular fa-clone"></i> Flashcards</button>
+        <button data-view="settings" onclick="navigate('settings')"><i class="fa-solid fa-gear"></i> Configurações</button>
+      </nav>
+      <div class="streak">
+        <b>7 dias seguidos</b>
+        <span>Continue assim!</span>
+      </div>
+      <button class="exit" type="button" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Sair</button>
+    </aside>
+
+    <section class="workspace">
+
+      <!-- 1. VISÃO GERAL -->
+      <div id="page-overview" class="app-page">
+        <div class="page-heading">
+          <div>
+            <p class="overline" id="today-date-label">Hoje</p>
+            <h1 id="welcome-title">Olá! Bom estudo.</h1>
+            <p id="welcome-subtitle">Você tem 0 revisões programadas para hoje.</p>
+          </div>
+          <button class="btn-sf primary" onclick="openDisciplineModal()"><i class="fa-solid fa-plus"></i> Nova disciplina</button>
+        </div>
+
+        <div class="overview-grid">
+          <article class="card-sf">
+            <div class="card-title">
+              <span class="round-icon warning"><i class="fa-regular fa-clock"></i></span>
+              <div><h2>Alerta de revisão</h2><p>Prioridades de hoje</p></div>
+              <b id="ov-pending-badge">0 pendentes</b>
+            </div>
+            <div id="ov-pending-list"></div>
+            <button class="inline-action" onclick="navigate('reviews')">Ver todas as revisões <i class="fa-solid fa-arrow-right"></i></button>
+          </article>
+
+          <article class="card-sf">
+            <div class="card-title">
+              <span class="round-icon blue"><i class="fa-solid fa-chart-column"></i></span>
+              <div><h2>Desempenho da semana</h2><p>Meta diária e revisões</p></div>
+              <b class="positive">+12%</b>
+            </div>
+            <strong class="big-number"><span id="ov-percent">0%</span> <small>das revisões concluídas</small></strong>
+            <div class="progress-sf"><i id="ov-progress-bar" style="width:0%"></i></div>
+            <div class="split-stats">
+              <span><b id="ov-meta-display">3/dia</b><small>Meta diária configurada<br />Mantenha o ritmo</small></span>
+              <span><b id="ov-done-ratio">0 / 0</b><small>Revisões concluídas<br />Ciclos ativos</small></span>
+            </div>
+          </article>
+
+          <article class="card-sf subjects-card">
+            <div class="card-title justify-content-between">
+              <div><h2>Minhas disciplinas</h2><p>Acompanhe seu progresso de aprendizado</p></div>
+              <div class="card-actions">
+                <button class="btn-sf outline compact" onclick="navigate('disciplines')"><i class="fa-solid fa-pen"></i> Gerenciar</button>
+              </div>
+            </div>
+            <div id="ov-subjects-list"></div>
+            <button class="inline-action right" onclick="navigate('disciplines')">Ver todas as disciplinas <i class="fa-solid fa-arrow-right"></i></button>
+          </article>
+        </div>
+      </div>
+
+      <!-- 2. DISCIPLINAS -->
+      <div id="page-disciplines" class="app-page" style="display:none;">
+        <div class="page-heading">
+          <div>
+            <p class="overline">Organização</p>
+            <h1>Minhas disciplinas</h1>
+            <p>Gerencie matérias, tópicos e ciclos de revisão.</p>
+          </div>
+          <div class="heading-actions">
+            <button class="btn-sf outline" onclick="navigate('overview')"><i class="fa-solid fa-arrow-left"></i> Voltar à visão geral</button>
+            <button class="btn-sf primary" onclick="openDisciplineModal()"><i class="fa-solid fa-plus"></i> Nova disciplina</button>
+          </div>
+        </div>
+        <div id="disciplines-grid" class="discipline-grid"></div>
+      </div>
+
+      <!-- 3. FILA DE REVISÕES -->
+      <div id="page-reviews" class="app-page" style="display:none;">
+        <div class="page-heading">
+          <div>
+            <p class="overline">Revisão espaçada</p>
+            <h1>Fila de revisões</h1>
+            <p>Revise no momento certo para transformar estudo em memória de longo prazo.</p>
+          </div>
+          <div class="heading-actions">
+            <button class="btn-sf outline" onclick="navigate('overview')"><i class="fa-solid fa-arrow-left"></i> Voltar à visão geral</button>
+            <button class="btn-sf primary" onclick="navigate('flashcards')"><i class="fa-regular fa-clone"></i> Acessar flashcards</button>
+          </div>
+        </div>
+
+        <div class="filter-bar card-sf">
+          <label>Disciplina
+            <select id="filter-rev-disc" onchange="renderReviews()"><option value="Todas">Todas</option></select>
+          </label>
+          <label>Status
+            <select id="filter-rev-status" onchange="renderReviews()">
+              <option value="Todos">Todos</option>
+              <option value="Atrasado">Atrasado</option>
+              <option value="Hoje">Hoje</option>
+              <option value="Pendente">Pendente</option>
+            </select>
+          </label>
+          <button class="btn-sf outline history-shortcut" onclick="navigate('history')"><i class="fa-regular fa-clock"></i> Histórico de estudos</button>
+        </div>
+
+        <div id="reviews-list" class="review-list"></div>
+      </div>
+
+      <!-- 4. FLASHCARDS -->
+      <div id="page-flashcards" class="app-page" style="display:none;">
+        <div class="page-heading">
+          <div>
+            <p class="overline">Memorização ativa</p>
+            <h1>Central de flashcards</h1>
+            <p>Crie cartões de estudo e revise os conceitos essenciais das suas disciplinas.</p>
+          </div>
+          <div class="heading-actions">
+            <button class="btn-sf outline" onclick="navigate('overview')"><i class="fa-solid fa-arrow-left"></i> Voltar à visão geral</button>
+            <button class="btn-sf outline" onclick="navigate('reviews')"><i class="fa-regular fa-calendar"></i> Fila de revisões</button>
+          </div>
+        </div>
+
+        <div class="flashcard-layout">
+          <form class="card-sf flashcard-form" onsubmit="addFlashcard(event)">
+            <div class="settings-title">
+              <span class="round-icon blue"><i class="fa-solid fa-plus"></i></span>
+              <div><h2>Novo flashcard</h2><p>Adicione uma pergunta e a resposta.</p></div>
+            </div>
+            <label>Disciplina
+              <select id="fc-disc-select" required></select>
+            </label>
+            <label>Pergunta
+              <textarea id="fc-question" required placeholder="Ex.: O que é uma chave primária?"></textarea>
+            </label>
+            <label>Resposta
+              <textarea id="fc-answer" required placeholder="Digite a resposta que aparecerá no verso do cartão."></textarea>
+            </label>
+            <button class="btn-sf primary full" type="submit"><i class="fa-solid fa-plus"></i> Salvar flashcard</button>
+          </form>
+
+          <section class="flashcard-library">
+            <div class="library-heading">
+              <div><h2>Seus flashcards</h2><p id="fc-count">0 cartões disponíveis</p></div>
+              <div class="flash-filters">
+                <select id="fc-filter-disc" onchange="renderFlashcards()"><option value="Todas">Todas</option></select>
+                <select id="fc-filter-level" onchange="renderFlashcards()">
+                  <option value="Todos">Todos os níveis</option>
+                  <option value="Novo">Novo</option>
+                  <option value="Em revisão">Em revisão</option>
+                  <option value="Dominado">Dominado</option>
+                </select>
+              </div>
+            </div>
+            <div id="flashcards-grid" class="flashcard-grid"></div>
+          </section>
+        </div>
+      </div>
+
+      <!-- 5. HISTÓRICO -->
+      <div id="page-history" class="app-page" style="display:none;">
+        <div class="page-heading">
+          <div>
+            <p class="overline">Registro de aprendizagem</p>
+            <h1>Histórico de estudos</h1>
+            <p>Consulte todas as revisões concluídas e acompanhe sua consistência.</p>
+          </div>
+          <div class="heading-actions">
+            <button class="btn-sf outline" onclick="navigate('overview')"><i class="fa-solid fa-arrow-left"></i> Voltar à visão geral</button>
+            <button class="btn-sf primary" onclick="window.print()"><i class="fa-solid fa-download"></i> Exportar PDF</button>
+          </div>
+        </div>
+
+        <div class="history card-sf">
+          <label class="table-search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input id="history-search" onkeyup="renderHistory()" placeholder="Buscar histórico..." />
+          </label>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Data conclusão</th><th>Disciplina</th><th>Tópico</th><th>Ciclo</th><th>Status</th></tr>
+              </thead>
+              <tbody id="history-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. DESEMPENHO -->
+      <div id="page-performance" class="app-page" style="display:none;">
+        <div class="page-heading">
+          <div>
+            <p class="overline">Evolução</p>
+            <h1>Desempenho e estatísticas</h1>
+            <p>Entenda seu ritmo de aprendizagem e ajuste sua rotina com dados.</p>
+          </div>
+          <button class="btn-sf outline" onclick="navigate('overview')"><i class="fa-solid fa-arrow-left"></i> Voltar à visão geral</button>
+        </div>
+
+        <div class="kpi-grid">
+          <article class="card-sf kpi"><span>Disciplinas ativas</span><b id="perf-discs">0</b><small>cadastradas na conta</small></article>
+          <article class="card-sf kpi"><span>Taxa de conclusão</span><b id="perf-rate">0%</b><small class="positive">Ciclos realizados</small></article>
+          <article class="card-sf kpi"><span>Meta diária</span><b id="perf-meta">3</b><small>revisões por dia</small></article>
+          <article class="card-sf kpi"><span>Revisões concluídas</span><b id="perf-done">0</b><small>no histórico total</small></article>
+        </div>
+
+        <div class="charts-grid">
+          <article class="card-sf chart-card">
+            <div class="card-title"><div><h2>Rendimento por disciplina</h2><p>Aproveitamento estimado</p></div></div>
+            <div id="perf-bar-chart" class="bar-chart"></div>
+          </article>
+          <article class="card-sf chart-card">
+            <div class="card-title"><div><h2>Distribuição de status</h2><p>Situação das revisões</p></div></div>
+            <div class="donut-wrap">
+              <div id="perf-donut" class="donut">
+                <span><b id="perf-donut-val">0%</b><small>concluído</small></span>
+              </div>
+              <div class="legend">
+                <span><i class="blue-dot"></i>Concluídas <b id="leg-done">0</b></span>
+                <span><i class="purple-dot"></i>Em dia / Pendentes <b id="leg-pend">0</b></span>
+                <span><i class="red-dot"></i>Em atraso <b id="leg-late">0</b></span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- 7. PERFIL -->
+      <div id="page-profile" class="app-page" style="display:none;">
+        <div class="page-heading">
+          <div>
+            <p class="overline">Sua conta</p>
+            <h1>Perfil do Estudante</h1>
+            <p>Atualize seus dados e meta diária de estudo.</p>
+          </div>
+          <button class="btn-sf outline" onclick="navigate('overview')"><i class="fa-solid fa-arrow-left"></i> Voltar à visão geral</button>
+        </div>
+
+        <div class="profile-grid">
+          <article class="card-sf profile-card">
+            <span class="profile-avatar" id="prof-avatar">ES</span>
+            <h2 id="prof-name-card">Estudante</h2>
+            <p id="prof-email-card">estudante@saberflow.com</p>
+            <div class="profile-stats">
+              <span><b id="prof-stat-discs">0</b>disciplinas</span>
+              <span><b id="prof-stat-meta">3</b>meta/dia</span>
+              <span><b id="prof-stat-done">0</b>revisões</span>
+            </div>
+          </article>
+
+          <form class="card-sf profile-form" onsubmit="saveProfile(event)">
+            <h2>Informações pessoais</h2>
+            <div class="form-grid">
+              <label>Nome completo<input id="prof-input-name" /></label>
+              <label>E-mail<input id="prof-input-email" disabled /></label>
+              <label>Curso<input value="Análise e Desenvolvimento de Sistemas" /></label>
+              <label>Meta diária de revisões<input id="prof-input-meta" type="number" min="1" max="50" /></label>
+            </div>
+            <div class="save-row">
+              <button class="btn-sf primary" type="submit">Salvar alterações</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- 8. CONFIGURAÇÕES -->
+      <div id="page-settings" class="app-page" style="display:none;">
+        <div class="page-heading">
+          <div>
+            <p class="overline">Preferências</p>
+            <h1>Configurações</h1>
+            <p>Personalize a aparência, notificações e comportamento do SaberFlow.</p>
+          </div>
+          <button class="btn-sf outline" onclick="navigate('overview')"><i class="fa-solid fa-arrow-left"></i> Voltar à visão geral</button>
+        </div>
+
+        <div class="settings-grid">
+          <!-- Aparência -->
+          <article class="card-sf settings-card">
+            <div class="settings-title">
+              <span class="round-icon blue"><i class="fa-regular fa-moon"></i></span>
+              <div><h2>Aparência</h2><p>Escolha como o SaberFlow aparece para você.</p></div>
+            </div>
+            <div class="theme-options">
+              <button id="btn-theme-light" class="selected" type="button" onclick="setTheme('light')">
+                <span class="theme-preview light-preview"><i></i><i></i><i></i></span>
+                <b>Tema claro</b><small>Interface clara atual</small>
+              </button>
+              <button id="btn-theme-dark" type="button" onclick="setTheme('dark')">
+                <span class="theme-preview dark-preview"><i></i><i></i><i></i></span>
+                <b>Tema escuro</b><small>Confortável à noite</small>
+              </button>
+            </div>
+            <label class="toggle-line mt-3">
+              <span><b>Visualização compacta</b><small>Reduz o espaçamento dos cartões e tabelas.</small></span>
+              <input id="cfg-compact" type="checkbox" onchange="toggleCompactMode()" />
+            </label>
+          </article>
+
+          <!-- Notificações -->
+          <article class="card-sf settings-card">
+            <div class="settings-title">
+              <span class="round-icon blue"><i class="fa-regular fa-bell"></i></span>
+              <div><h2>Notificações</h2><p>Controle os avisos que deseja receber.</p></div>
+            </div>
+            <label class="toggle-line">
+              <span><b>Lembretes de revisão</b><small>Alertas de revisões próximas ou atrasadas.</small></span>
+              <input id="cfg-notif-rev" type="checkbox" checked onchange="saveSettingsPrefs()" />
+            </label>
+            <label class="toggle-line">
+              <span><b>Resumo semanal</b><small>Relatório de desempenho toda segunda-feira.</small></span>
+              <input id="cfg-notif-week" type="checkbox" checked onchange="saveSettingsPrefs()" />
+            </label>
+          </article>
+
+          <!-- Geral -->
+          <article class="card-sf settings-card">
+            <div class="settings-title">
+              <span class="round-icon blue"><i class="fa-solid fa-gear"></i></span>
+              <div><h2>Geral</h2><p>Idioma e preferências da aplicação.</p></div>
+            </div>
+            <label class="settings-select-label">Idioma
+              <select id="cfg-lang" onchange="saveSettingsPrefs()">
+                <option value="pt-BR">Português (Brasil)</option>
+                <option value="en-US">English (US)</option>
+                <option value="es">Español</option>
+              </select>
+            </label>
+            <label class="settings-select-label mt-3">Início da semana
+              <select id="cfg-week-start" onchange="saveSettingsPrefs()">
+                <option value="monday">Segunda-feira</option>
+                <option value="sunday">Domingo</option>
+              </select>
+            </label>
+          </article>
+
+          <!-- Privacidade e conta -->
+          <article class="card-sf settings-card">
+            <div class="settings-title">
+              <span class="round-icon blue"><i class="fa-solid fa-shield-halved"></i></span>
+              <div><h2>Privacidade e conta</h2><p>Gerencie seus dados e sua sessão.</p></div>
+            </div>
+            <button type="button" class="settings-line" onclick="openPasswordModal()">
+              <span><b>Alterar senha</b><small>Atualize sua credencial de acesso.</small></span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+            <button type="button" class="settings-line" onclick="exportDataJSON()">
+              <span><b>Baixar meus dados</b><small>Baixe uma cópia em JSON das suas informações.</small></span>
+              <i class="fa-solid fa-download"></i>
+            </button>
+          </article>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- MODAL NOVA / EDITAR DISCIPLINA -->
+  <div id="modal-discipline" class="modal-backdrop" style="display:none;" onclick="closeDisciplineModal()">
+    <form class="modal-sf" onsubmit="saveDiscipline(event)" onclick="event.stopPropagation()">
+      <div class="modal-heading">
+        <div>
+          <p class="overline" id="modal-disc-overline">NOVA DISCIPLINA</p>
+          <h2 id="modal-disc-title">Cadastro de estudo</h2>
+        </div>
+        <button type="button" onclick="closeDisciplineModal()">×</button>
+      </div>
+      <label>Nome da disciplina
+        <input id="modal-disc-name" required placeholder="Ex.: Banco de Dados" />
+      </label>
+      <label>Assunto / Tópico
+        <input id="modal-topic-name" required placeholder="Ex.: Modelagem e SQL" />
+      </label>
+      <label>Data do estudo inicial
+        <input id="modal-study-date" type="date" required />
+      </label>
+      <fieldset>
+        <legend>Ciclos de revisão automáticos (selecione):</legend>
+        <div class="cycle-options">
+          <label><input type="checkbox" name="ciclo-opt" value="1" checked /> 24h</label>
+          <label><input type="checkbox" name="ciclo-opt" value="7" checked /> 7d</label>
+          <label><input type="checkbox" name="ciclo-opt" value="15" checked /> 15d</label>
+          <label><input type="checkbox" name="ciclo-opt" value="30" checked /> 30d</label>
+        </div>
+      </fieldset>
+      <div class="modal-actions">
+        <button class="btn-sf outline" type="button" onclick="closeDisciplineModal()">Cancelar</button>
+        <button class="btn-sf primary" type="submit" id="modal-disc-submit">Salvar e agendar revisões</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- MODAL ALTERAR SENHA -->
+  <div id="modal-password" class="modal-backdrop" style="display:none;" onclick="closePasswordModal()">
+    <form class="modal-sf" onsubmit="submitChangePassword(event)" onclick="event.stopPropagation()">
+      <div class="modal-heading">
+        <div><p class="overline">SEGURANÇA</p><h2>Alterar senha</h2></div>
+        <button type="button" onclick="closePasswordModal()">×</button>
+      </div>
+      <label>Nova senha (mínimo 6 caracteres)
+        <input id="modal-new-pass" type="password" minlength="6" required placeholder="Digite a nova senha" />
+      </label>
+      <div class="modal-actions">
+        <button class="btn-sf outline" type="button" onclick="closePasswordModal()">Cancelar</button>
+        <button class="btn-sf primary" type="submit">Salvar nova senha</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
