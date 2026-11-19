@@ -7,8 +7,34 @@ let historyReviews = [];
 let editingDisciplineId = null;
 
 let flashcardsData = [];
-let rescheduleHistory = JSON.parse(localStorage.getItem("saberflow_reschedules") || "[]");
 let pendingRescheduleId = null;
+
+// --- ARMAZENAMENTO SEGURO (EVITA QUEBRA COM TRACKING PREVENTION) ---
+const memoryStore = {};
+
+function safeStorageGet(key) {
+  try {
+    return window.localStorage.getItem(key);
+  } catch {
+    return Object.prototype.hasOwnProperty.call(memoryStore, key) ? memoryStore[key] : null;
+  }
+}
+
+function safeStorageSet(key, value) {
+  try {
+    window.localStorage.setItem(key, value);
+  } catch {
+    memoryStore[key] = String(value);
+  }
+}
+
+let rescheduleHistory = (() => {
+  try {
+    return JSON.parse(safeStorageGet("saberflow_reschedules") || "[]");
+  } catch {
+    return [];
+  }
+})();
 
 // --- INTERNACIONALIZAÇÃO (PT / EN / ES) ---
 const I18N = {
@@ -510,7 +536,7 @@ const I18N = {
 };
 
 function getLang() {
-  const lang = document.getElementById("cfg-lang")?.value || localStorage.getItem("saberflow_lang") || "pt-BR";
+  const lang = document.getElementById("cfg-lang")?.value || safeStorageGet("saberflow_lang") || "pt-BR";
   return I18N[lang] ? lang : "pt-BR";
 }
 
@@ -521,7 +547,7 @@ function t(key) {
 
 function applyLanguage(lang) {
   const validLang = I18N[lang] ? lang : "pt-BR";
-  localStorage.setItem("saberflow_lang", validLang);
+  safeStorageSet("saberflow_lang", validLang);
   document.documentElement.lang = validLang;
 
   document.querySelectorAll("[data-i18n]").forEach(el => {
@@ -590,7 +616,7 @@ function getFlashcardStorageKey() {
 
 function loadUserFlashcards() {
   const key = getFlashcardStorageKey();
-  const raw = localStorage.getItem(key);
+  const raw = safeStorageGet(key);
 
   if (raw !== null) {
     try {
@@ -603,8 +629,7 @@ function loadUserFlashcards() {
     }
   }
 
-  // Migra dados legados apenas uma vez se existirem e ainda não houver chave do usuário
-  const legacyRaw = localStorage.getItem("saberflow_flashcards");
+  const legacyRaw = safeStorageGet("saberflow_flashcards");
   if (legacyRaw !== null && currentUser?.id) {
     try {
       const legacyParsed = JSON.parse(legacyRaw);
@@ -624,7 +649,7 @@ function loadUserFlashcards() {
 }
 
 function saveFlashcardsLocal() {
-  localStorage.setItem(getFlashcardStorageKey(), JSON.stringify(flashcardsData));
+  safeStorageSet(getFlashcardStorageKey(), JSON.stringify(flashcardsData));
 }
 
 // --- UTILITÁRIOS ---
@@ -641,14 +666,15 @@ function fecharToast() {
 
 function togglePass(id) {
   const inp = document.getElementById(id);
+  if (!inp) return;
   inp.type = inp.type === "password" ? "text" : "password";
 }
 
 function setTheme(theme) {
   document.documentElement.setAttribute("data-theme", theme);
-  localStorage.setItem("saberflow_theme", theme);
-  document.getElementById("btn-theme-light").classList.toggle("selected", theme === "light");
-  document.getElementById("btn-theme-dark").classList.toggle("selected", theme === "dark");
+  safeStorageSet("saberflow_theme", theme);
+  document.getElementById("btn-theme-light")?.classList.toggle("selected", theme === "light");
+  document.getElementById("btn-theme-dark")?.classList.toggle("selected", theme === "dark");
 }
 
 function toggleCompactMode() {
@@ -665,13 +691,18 @@ function saveSettingsPrefs() {
     lang: document.getElementById("cfg-lang").value,
     weekStart: document.getElementById("cfg-week-start").value
   };
-  localStorage.setItem("saberflow_prefs", JSON.stringify(prefs));
+  safeStorageSet("saberflow_prefs", JSON.stringify(prefs));
   applyLanguage(prefs.lang);
   showToast(t("prefs_saved"));
 }
 
 function loadSettingsPrefs() {
-  const prefs = JSON.parse(localStorage.getItem("saberflow_prefs") || "null");
+  let prefs = null;
+  try {
+    prefs = JSON.parse(safeStorageGet("saberflow_prefs") || "null");
+  } catch {
+    prefs = null;
+  }
   if (!prefs) {
     applyLanguage("pt-BR");
     return;
@@ -710,7 +741,7 @@ async function handleLogin(e) {
     currentUser = await res.json();
     iniciarSessao();
   } catch (err) {
-    showToast("Erro ao conectar com a API FastAPI. Verifique se o uvicorn está rodando.");
+    showToast("Erro ao conectar com a API FastAPI. Verifique se o servidor está online.");
   }
 }
 
@@ -1139,7 +1170,7 @@ async function confirmReschedule() {
     prazo_dias: prazoDias,
     reagendado_em: new Date().toISOString()
   });
-  localStorage.setItem("saberflow_reschedules", JSON.stringify(rescheduleHistory));
+  safeStorageSet("saberflow_reschedules", JSON.stringify(rescheduleHistory));
 
   closeRescheduleModal();
   showToast(`Revisão reagendada para ${novaData}!`);
@@ -1338,5 +1369,5 @@ function filtrarGlobal() {
   navigate("disciplines");
 }
 
-const savedTheme = localStorage.getItem("saberflow_theme");
+const savedTheme = safeStorageGet("saberflow_theme");
 if (savedTheme === "dark") setTheme("dark");
