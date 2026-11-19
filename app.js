@@ -10,6 +10,8 @@ let flashcardsData = JSON.parse(localStorage.getItem("saberflow_flashcards") || 
   { id: 1, discipline: "Banco de Dados", question: "O que é normalização em um banco de dados?", answer: "É o processo de organizar tabelas para reduzir redundância e melhorar a integridade dos dados.", level: "Em revisão", open: false },
   { id: 2, discipline: "Python", question: "Qual é a diferença entre uma lista e uma tupla?", answer: "Listas são mutáveis e usam colchetes; tuplas são imutáveis e usam parênteses.", level: "Dominado", open: false }
 ];
+let rescheduleHistory = JSON.parse(localStorage.getItem("saberflow_reschedules") || "[]");
+let pendingRescheduleId = null;
 
 // --- UTILITÁRIOS ---
 function showToast(msg) {
@@ -374,7 +376,7 @@ async function deleteDiscipline(id) {
   loadAllData();
 }
 
-// --- RENDER: REVISÕES ---
+/// --- RENDER: REVISÕES ---
 function renderReviews() {
   const fDisc = document.getElementById("filter-rev-disc").value;
   const fStat = document.getElementById("filter-rev-status").value;
@@ -406,10 +408,10 @@ function renderReviews() {
           <p>Ciclo de ${r.intervalo_dias} dias · Prevista para ${r.data_prevista}</p>
         </div>
         <div class="review-actions">
-          <button class="btn-sf outline" onclick="adiarRevisao(${r.ciclo_id})">
-            Adiar 7 dias
+          <button class="btn-sf outline" type="button" onclick="openRescheduleModal(${r.ciclo_id})">
+            <i class="fa-regular fa-calendar"></i> Adiar / Reagendar
           </button>
-          <button class="btn-sf primary" onclick="concluirRevisao(${r.ciclo_id})">
+          <button class="btn-sf primary" type="button" onclick="concluirRevisao(${r.ciclo_id})">
             <i class="fa-solid fa-check"></i> Concluir revisão
           </button>
         </div>
@@ -418,15 +420,116 @@ function renderReviews() {
   }).join("");
 }
 
+function openRescheduleModal(cicloId) {
+  const rev = pendingReviews.find(r => r.ciclo_id === cicloId);
+  if (!rev) return;
+  pendingRescheduleId = cicloId;
+
+  const hojeISO = new Date().toISOString().split("T")[0];
+  const defaultDate = new Date(Date.now() + 7 * 86400000).toISOString().split("T")[0];
+
+  let modal = document.getElementById("reschedule-modal");
+  if (!modal) {
+    modal = document.createElement("div");
+    modal.id = "reschedule-modal";
+    modal.className = "modal-backdrop";
+    document.body.appendChild(modal);
+  }
+
+  modal.style.display = "grid";
+  modal.innerHTML = `
+    <div class="modal-sf">
+      <div class="modal-heading">
+        <div>
+          <p class="overline">REAGENDAR REVISÃO</p>
+          <h2>${rev.topico}</h2>
+        </div>
+        <button type="button" onclick="closeRescheduleModal()">&times;</button>
+      </div>
+      <p style="margin:0 0 16px;font-size:12px;color:#64748b;">
+        Disciplina: <b>${rev.disciplina}</b> · Data atual: <b>${rev.data_prevista}</b>
+      </p>
+      <label>
+        Escolher nova data
+        <input type="date" id="reschedule-date" min="${hojeISO}" value="${defaultDate}" onchange="syncDaysFromDate()">
+      </label>
+      <label>
+        Ou escolher prazo em dias a partir de hoje
+        <select id="reschedule-days" onchange="syncDateFromDays()">
+          <option value="1">+1 dia</option>
+          <option value="3">+3 dias</option>
+          <option value="7" selected>+7 dias</option>
+          <option value="15">+15 dias</option>
+          <option value="30">+30 dias</option>
+        </select>
+      </label>
+      <div class="modal-actions">
+        <button class="btn-sf outline" type="button" onclick="closeRescheduleModal()">Cancelar</button>
+        <button class="btn-sf primary" type="button" onclick="confirmReschedule()">Confirmar nova data</button>
+      </div>
+    </div>
+  `;
+}
+
+function closeRescheduleModal() {
+  const modal = document.getElementById("reschedule-modal");
+  if (modal) modal.style.display = "none";
+  pendingRescheduleId = null;
+}
+
+function syncDateFromDays() {
+  const days = parseInt(document.getElementById("reschedule-days").value, 10) || 7;
+  const newDate = new Date(Date.now() + days * 86400000).toISOString().split("T")[0];
+  document.getElementById("reschedule-date").value = newDate;
+}
+
+function syncDaysFromDate() {
+  const val = document.getElementById("reschedule-date").value;
+  if (!val) return;
+  const diffDays = Math.max(1, Math.round((new Date(val + "T00:00:00") - new Date(new Date().toISOString().split("T")[0] + "T00:00:00")) / 86400000));
+  const sel = document.getElementById("reschedule-days");
+  const match = Array.from(sel.options).find(o => parseInt(o.value, 10) === diffDays);
+  if (match) sel.value = match.value;
+}
+
+async function confirmReschedule() {
+  if (!pendingRescheduleId) return;
+  const cicloId = pendingRescheduleId;
+  const novaData = document.getElementById("reschedule-date").value;
+  const prazoDias = parseInt(document.getElementById("reschedule-days").value, 10) || 7;
+  const rev = pendingReviews.find(r => r.ciclo_id === cicloId);
+
+  if (!novaData) return showToast("Escolha uma data válida para reagendar.");
+
+  try {
+    await fetch(`${API_URL}/revisoes/adiar/${cicloId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nova_data: novaData, dias: prazoDias })
+    });
+  } catch (err) {
+    console.warn("Aviso ao notificar API de reagendamento:", err);
+  }
+
+  rescheduleHistory.unshift({
+    ciclo_id: cicloId,
+    disciplina: rev?.disciplina || "",
+    topico: rev?.topico || "",
+    data_anterior: rev?.data_prevista || "",
+    nova_data: novaData,
+    prazo_dias: prazoDias,
+    reagendado_em: new Date().toISOString()
+  });
+  localStorage.setItem("saberflow_reschedules", JSON.stringify(rescheduleHistory));
+
+  closeRescheduleModal();
+  showToast(`Revisão reagendada para ${novaData}!`);
+  await loadAllData();
+}
+
 async function concluirRevisao(cicloId) {
   await fetch(`${API_URL}/revisoes/concluir/${cicloId}`, { method: "PUT" });
   showToast("Revisão concluída e enviada ao histórico!");
-  loadAllData();
-}
-
-async function adiarRevisao(cicloId) {
-  await fetch(`${API_URL}/revisoes/adiar/${cicloId}`, { method: "PUT" });
-  showToast("Revisão adiada em 7 dias.");
   loadAllData();
 }
 

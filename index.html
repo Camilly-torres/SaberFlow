@@ -47,7 +47,7 @@
     </section>
 
     <section class="auth-form">
-      <!-- FORM LOGIN -->
+      <!-- LOGIN -->
       <div id="auth-login" class="auth-content">
         <p class="overline">Bem-vindo de volta</p>
         <h2>Continue sua jornada</h2>
@@ -72,7 +72,7 @@
         <button class="btn-sf outline full" type="button" onclick="switchAuth('register')">Criar minha conta</button>
       </div>
 
-      <!-- FORM CADASTRO -->
+      <!-- CADASTRO -->
       <div id="auth-register" class="auth-content" style="display:none;">
         <p class="overline">Comece agora</p>
         <h2>Crie sua conta</h2>
@@ -87,7 +87,7 @@
           <label>Senha
             <span class="password">
               <input id="reg-senha" required minlength="6" type="password" placeholder="Crie uma senha (mín. 6 caracteres)" />
-              <button type="button" onclick="togglePass('reg-senha')"><i class="fa-regular fa-eye"></i></button>
+              <button type="button" onclick="togglePass('reg-senha')" aria-label="Mostrar senha"><i class="fa-regular fa-eye"></i></button>
             </span>
           </label>
           <button class="btn-sf primary full" type="submit">Cadastrar <i class="fa-solid fa-arrow-right"></i></button>
@@ -95,7 +95,7 @@
         <p class="auth-return mt-3">Já tem uma conta? <button type="button" class="link" onclick="switchAuth('login')">Voltar para o login</button></p>
       </div>
 
-      <!-- FORM RECUPERAÇÃO -->
+      <!-- RECUPERAÇÃO -->
       <div id="auth-recover" class="auth-content" style="display:none;">
         <p class="overline">Recupere seu acesso</p>
         <h2>Redefinir senha</h2>
@@ -154,7 +154,7 @@
 
     <section class="workspace">
 
-      <!-- 1. VISÃO GERAL -->
+      <!-- VISÃO GERAL -->
       <div id="page-overview" class="app-page">
         <div class="page-heading">
           <div>
@@ -203,7 +203,7 @@
         </div>
       </div>
 
-      <!-- 2. DISCIPLINAS -->
+      <!-- DISCIPLINAS -->
       <div id="page-disciplines" class="app-page" style="display:none;">
         <div class="page-heading">
           <div>
@@ -212,14 +212,13 @@
             <p>Gerencie matérias, tópicos e ciclos de revisão.</p>
           </div>
           <div class="heading-actions">
-            <button class="btn-sf outline" onclick="navigate('overview')"><i class="fa-solid fa-arrow-left"></i> Voltar à visão geral</button>
             <button class="btn-sf primary" onclick="openDisciplineModal()"><i class="fa-solid fa-plus"></i> Nova disciplina</button>
           </div>
         </div>
         <div id="disciplines-grid" class="discipline-grid"></div>
       </div>
 
-      <!-- 3. FILA DE REVISÕES -->
+      <!-- FILA DE REVISÕES -->
       <div id="page-reviews" class="app-page" style="display:none;">
         <div class="page-heading">
           <div>
@@ -228,7 +227,6 @@
             <p>Revise no momento certo para transformar estudo em memória de longo prazo.</p>
           </div>
           <div class="heading-actions">
-            <button class="btn-sf outline" onclick="navigate('overview')"><i class="fa-solid fa-arrow-left"></i> Voltar à visão geral</button>
             <button class="btn-sf primary" onclick="navigate('flashcards')"><i class="fa-regular fa-clone"></i> Acessar flashcards</button>
           </div>
         </div>
@@ -251,7 +249,7 @@
         <div id="reviews-list" class="review-list"></div>
       </div>
 
-      <!-- 4. FLASHCARDS -->
+      <!-- FLASHCARDS -->
       <div id="page-flashcards" class="app-page" style="display:none;">
         <div class="page-heading">
           <div>
@@ -260,7 +258,6 @@
             <p>Crie cartões de estudo e revise os conceitos essenciais das suas disciplinas.</p>
           </div>
           <div class="heading-actions">
-            <button class="btn-sf outline" onclick="navigate('overview')"><i class="fa-solid fa-arrow-left"></i> Voltar à visão geral</button>
             <button class="btn-sf outline" onclick="navigate('reviews')"><i class="fa-regular fa-calendar"></i> Fila de revisões</button>
           </div>
         </div>
@@ -301,7 +298,7 @@
         </div>
       </div>
 
-      <!-- 5. HISTÓRICO -->
+      <!-- HISTÓRICO -->
       <div id="page-history" class="app-page" style="display:none;">
         <div class="page-heading">
           <div>
@@ -310,7 +307,6 @@
             <p>Consulte todas as revisões concluídas e acompanhe sua consistência.</p>
           </div>
           <div class="heading-actions">
-            <button class="btn-sf outline" onclick="navigate('overview')"><i class="fa-solid fa-arrow-left"></i> Voltar à visão geral</button>
             <button class="btn-sf primary" onclick="window.print()"><i class="fa-solid fa-download"></i> Exportar PDF</button>
           </div>
         </div>
@@ -331,7 +327,7 @@
         </div>
       </div>
 
-      <!-- 6. DESEMPENHO -->
+      <!-- DESEMPENHO -->
       <div id="page-performance" class="app-page" style="display:none;">
         <div class="page-heading">
           <div>
@@ -370,7 +366,7 @@
         </div>
       </div>
 
-      <!-- 7. PERFIL -->
+      <!--  PERFIL -->
       <div id="page-profile" class="app-page" style="display:none;">
         <div class="page-heading">
           <div>
@@ -408,7 +404,7 @@
         </div>
       </div>
 
-      <!-- 8. CONFIGURAÇÕES -->
+      <!--  CONFIGURAÇÕES -->
       <div id="page-settings" class="app-page" style="display:none;">
         <div class="page-heading">
           <div>
@@ -420,7 +416,7 @@
         </div>
 
         <div class="settings-grid">
-          <!-- Aparência -->
+          <!-- APARÊNCIA -->
           <article class="card-sf settings-card">
             <div class="settings-title">
               <span class="round-icon blue"><i class="fa-regular fa-moon"></i></span>
@@ -442,7 +438,7 @@
             </label>
           </article>
 
-          <!-- Notificações -->
+          <!-- NOTIFICAÇÕES -->
           <article class="card-sf settings-card">
             <div class="settings-title">
               <span class="round-icon blue"><i class="fa-regular fa-bell"></i></span>
@@ -458,7 +454,7 @@
             </label>
           </article>
 
-          <!-- Geral -->
+          <!-- GERAL -->
           <article class="card-sf settings-card">
             <div class="settings-title">
               <span class="round-icon blue"><i class="fa-solid fa-gear"></i></span>
@@ -479,7 +475,7 @@
             </label>
           </article>
 
-          <!-- Privacidade e conta -->
+          <!-- PRIVACIDADE E CONTA -->
           <article class="card-sf settings-card">
             <div class="settings-title">
               <span class="round-icon blue"><i class="fa-solid fa-shield-halved"></i></span>
@@ -500,7 +496,7 @@
     </section>
   </main>
 
-  <!-- MODAL NOVA / EDITAR DISCIPLINA -->
+  <!-- NOVA / EDITAR DISCIPLINA -->
   <div id="modal-discipline" class="modal-backdrop" style="display:none;" onclick="closeDisciplineModal()">
     <form class="modal-sf" onsubmit="saveDiscipline(event)" onclick="event.stopPropagation()">
       <div class="modal-heading">
@@ -535,7 +531,7 @@
     </form>
   </div>
 
-  <!-- MODAL ALTERAR SENHA -->
+  <!--  ALTERAR SENHA -->
   <div id="modal-password" class="modal-backdrop" style="display:none;" onclick="closePasswordModal()">
     <form class="modal-sf" onsubmit="submitChangePassword(event)" onclick="event.stopPropagation()">
       <div class="modal-heading">
