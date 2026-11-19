@@ -28,7 +28,7 @@
       </div>
 
       <div class="floating-progress">
-        <span>Progresso semanal</span>
+        <span data-i18n="weekly_progress">Progresso semanal</span>
         <b>78%</b>
       </div>
 
@@ -36,80 +36,80 @@
         <i>AM</i><i>JS</i><i>RL</i><i>+2 mil</i>
       </div>
 
-      <p class="overline">Aprenda no seu ritmo</p>
-      <h1>Conhecimento que flui com você.</h1>
-      <p>Planeje seus estudos, acompanhe cada conquista e mantenha o foco no que realmente importa.</p>
+      <p class="overline" data-i18n="auth_overline">Aprenda no seu ritmo</p>
+      <h1 data-i18n="auth_h1">Conhecimento que flui com você.</h1>
+      <p data-i18n="auth_desc">Planeje seus estudos, acompanhe cada conquista e mantenha o foco no que realmente importa.</p>
 
       <div class="auth-art-footer">
         <span>© 2026 SaberFlow</span>
-        <span>Aprender. Evoluir. Conquistar.</span>
+        <span data-i18n="auth_tagline">Aprender. Evoluir. Conquistar.</span>
       </div>
     </section>
 
     <section class="auth-form">
       <!-- LOGIN -->
       <div id="auth-login" class="auth-content">
-        <p class="overline">Bem-vindo de volta</p>
-        <h2>Continue sua jornada</h2>
-        <p>Acesse sua conta e retome seus estudos de onde parou.</p>
+        <p class="overline" data-i18n="login_overline">Bem-vindo de volta</p>
+        <h2 data-i18n="login_title">Continue sua jornada</h2>
+        <p data-i18n="login_sub">Acesse sua conta e retome seus estudos de onde parou.</p>
         <form onsubmit="handleLogin(event)">
-          <label>E-mail
+          <label><span data-i18n="email_label">E-mail</span>
             <input id="login-email" required type="email" placeholder="seuemail@exemplo.com" />
           </label>
           <label>
             <span class="label-row">
-              <span>Senha</span>
-              <button type="button" class="link" onclick="switchAuth('recover')">Esqueci minha senha</button>
+              <span data-i18n="password_label">Senha</span>
+              <button type="button" class="link" onclick="switchAuth('recover')" data-i18n="forgot_password">Esqueci minha senha</button>
             </span>
             <span class="password">
               <input id="login-senha" required minlength="6" type="password" placeholder="Digite sua senha" />
               <button type="button" onclick="togglePass('login-senha')" aria-label="Mostrar senha"><i class="fa-regular fa-eye"></i></button>
             </span>
           </label>
-          <button class="btn-sf primary full" type="submit">Entrar <i class="fa-solid fa-arrow-right"></i></button>
+          <button class="btn-sf primary full" type="submit"><span data-i18n="login_btn">Entrar</span> <i class="fa-solid fa-arrow-right"></i></button>
         </form>
-        <div class="or"><span>Novo por aqui?</span></div>
-        <button class="btn-sf outline full" type="button" onclick="switchAuth('register')">Criar minha conta</button>
+        <div class="or"><span data-i18n="new_here">Novo por aqui?</span></div>
+        <button class="btn-sf outline full" type="button" onclick="switchAuth('register')" data-i18n="create_account_btn">Criar minha conta</button>
       </div>
 
       <!-- CADASTRO -->
       <div id="auth-register" class="auth-content" style="display:none;">
-        <p class="overline">Comece agora</p>
-        <h2>Crie sua conta</h2>
-        <p>Organize seus estudos e avance no seu próprio ritmo.</p>
+        <p class="overline" data-i18n="reg_overline">Comece agora</p>
+        <h2 data-i18n="reg_title">Crie sua conta</h2>
+        <p data-i18n="reg_sub">Organize seus estudos e avance no seu próprio ritmo.</p>
         <form onsubmit="handleRegister(event)">
-          <label>Nome
+          <label><span data-i18n="name_label">Nome</span>
             <input id="reg-nome" required placeholder="Como podemos chamar você?" />
           </label>
-          <label>E-mail
+          <label><span data-i18n="email_label">E-mail</span>
             <input id="reg-email" required type="email" placeholder="seuemail@exemplo.com" />
           </label>
-          <label>Senha
+          <label><span data-i18n="password_label">Senha</span>
             <span class="password">
               <input id="reg-senha" required minlength="6" type="password" placeholder="Crie uma senha (mín. 6 caracteres)" />
               <button type="button" onclick="togglePass('reg-senha')" aria-label="Mostrar senha"><i class="fa-regular fa-eye"></i></button>
             </span>
           </label>
-          <button class="btn-sf primary full" type="submit">Cadastrar <i class="fa-solid fa-arrow-right"></i></button>
+          <button class="btn-sf primary full" type="submit"><span data-i18n="reg_btn">Cadastrar</span> <i class="fa-solid fa-arrow-right"></i></button>
         </form>
-        <p class="auth-return mt-3">Já tem uma conta? <button type="button" class="link" onclick="switchAuth('login')">Voltar para o login</button></p>
+        <p class="auth-return mt-3"><span data-i18n="already_account">Já tem uma conta?</span> <button type="button" class="link" onclick="switchAuth('login')" data-i18n="back_login">Voltar para o login</button></p>
       </div>
 
       <!-- RECUPERAÇÃO -->
       <div id="auth-recover" class="auth-content" style="display:none;">
-        <p class="overline">Recupere seu acesso</p>
-        <h2>Redefinir senha</h2>
-        <p>Informe seu e-mail cadastrado e defina uma nova senha segura.</p>
+        <p class="overline" data-i18n="rec_overline">Recupere seu acesso</p>
+        <h2 data-i18n="rec_title">Redefinir senha</h2>
+        <p data-i18n="rec_sub">Informe seu e-mail cadastrado e defina uma nova senha segura.</p>
         <form onsubmit="handleRecover(event)">
-          <label>E-mail cadastrado
+          <label><span data-i18n="rec_email_label">E-mail cadastrado</span>
             <input id="rec-email" required type="email" placeholder="seuemail@exemplo.com" />
           </label>
-          <label>Nova senha
+          <label><span data-i18n="new_password_label">Nova senha</span>
             <input id="rec-senha" required minlength="6" type="password" placeholder="Nova senha" />
           </label>
-          <button class="btn-sf primary full" type="submit">Atualizar senha <i class="fa-solid fa-arrow-right"></i></button>
+          <button class="btn-sf primary full" type="submit"><span data-i18n="rec_btn">Atualizar senha</span> <i class="fa-solid fa-arrow-right"></i></button>
         </form>
-        <p class="auth-return mt-3"><button type="button" class="link" onclick="switchAuth('login')">Voltar para o login</button></p>
+        <p class="auth-return mt-3"><button type="button" class="link" onclick="switchAuth('login')" data-i18n="back_login">Voltar para o login</button></p>
       </div>
     </section>
   </main>
@@ -129,27 +129,27 @@
 
       <button class="profile-trigger" type="button" onclick="navigate('profile')">
         <span id="user-initials">ES</span>
-        <b><span id="user-name-top">Estudante</span><small>Estudante</small></b>
+        <b><span id="user-name-top">Estudante</span><small data-i18n="student_role">Estudante</small></b>
         <i class="fa-solid fa-arrow-right" style="font-size:12px;"></i>
       </button>
     </header>
 
     <aside class="sidebar">
-      <p>Espaço de estudo</p>
+      <p data-i18n="space">Espaço de estudo</p>
       <nav id="sidebar-nav">
-        <button data-view="overview" class="active" onclick="navigate('overview')"><i class="fa-solid fa-table-cells-large"></i> Visão geral</button>
-        <button data-view="disciplines" onclick="navigate('disciplines')"><i class="fa-solid fa-book"></i> Disciplinas</button>
-        <button data-view="reviews" onclick="navigate('reviews')"><i class="fa-regular fa-calendar"></i> Revisões</button>
-        <button data-view="performance" onclick="navigate('performance')"><i class="fa-solid fa-chart-column"></i> Desempenho</button>
-        <button data-view="history" onclick="navigate('history')"><i class="fa-regular fa-clock"></i> Histórico</button>
-        <button data-view="flashcards" onclick="navigate('flashcards')"><i class="fa-regular fa-clone"></i> Flashcards</button>
-        <button data-view="settings" onclick="navigate('settings')"><i class="fa-solid fa-gear"></i> Configurações</button>
+        <button data-view="overview" class="active" onclick="navigate('overview')"><i class="fa-solid fa-table-cells-large"></i> <span data-i18n="nav_overview">Visão geral</span></button>
+        <button data-view="disciplines" onclick="navigate('disciplines')"><i class="fa-solid fa-book"></i> <span data-i18n="nav_disciplines">Disciplinas</span></button>
+        <button data-view="reviews" onclick="navigate('reviews')"><i class="fa-regular fa-calendar"></i> <span data-i18n="nav_reviews">Revisões</span></button>
+        <button data-view="performance" onclick="navigate('performance')"><i class="fa-solid fa-chart-column"></i> <span data-i18n="nav_performance">Desempenho</span></button>
+        <button data-view="history" onclick="navigate('history')"><i class="fa-regular fa-clock"></i> <span data-i18n="nav_history">Histórico</span></button>
+        <button data-view="flashcards" onclick="navigate('flashcards')"><i class="fa-regular fa-clone"></i> <span data-i18n="nav_flashcards">Flashcards</span></button>
+        <button data-view="settings" onclick="navigate('settings')"><i class="fa-solid fa-gear"></i> <span data-i18n="nav_settings">Configurações</span></button>
       </nav>
       <div class="streak">
-        <b>7 dias seguidos</b>
-        <span>Continue assim!</span>
+        <b data-i18n="streak_days">7 dias seguidos</b>
+        <span data-i18n="streak_sub">Continue assim!</span>
       </div>
-      <button class="exit" type="button" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Sair</button>
+      <button class="exit" type="button" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> <span data-i18n="logout">Sair</span></button>
     </aside>
 
     <section class="workspace">
@@ -159,46 +159,46 @@
         <div class="page-heading">
           <div>
             <p class="overline" id="today-date-label">Hoje</p>
-            <h1 id="welcome-title">Olá! Bom estudo.</h1>
+            <h1 id="welcome-title" data-i18n="welcome_title">Olá! Bom estudo.</h1>
             <p id="welcome-subtitle">Você tem 0 revisões programadas para hoje.</p>
           </div>
-          <button class="btn-sf primary" onclick="openDisciplineModal()"><i class="fa-solid fa-plus"></i> Nova disciplina</button>
+          <button class="btn-sf primary" onclick="openDisciplineModal()"><i class="fa-solid fa-plus"></i> <span data-i18n="new_discipline">Nova disciplina</span></button>
         </div>
 
         <div class="overview-grid">
           <article class="card-sf">
             <div class="card-title">
               <span class="round-icon warning"><i class="fa-regular fa-clock"></i></span>
-              <div><h2>Alerta de revisão</h2><p>Prioridades de hoje</p></div>
+              <div><h2 data-i18n="review_alert_title">Alerta de revisão</h2><p data-i18n="review_alert_sub">Prioridades de hoje</p></div>
               <b id="ov-pending-badge">0 pendentes</b>
             </div>
             <div id="ov-pending-list"></div>
-            <button class="inline-action" onclick="navigate('reviews')">Ver todas as revisões <i class="fa-solid fa-arrow-right"></i></button>
+            <button class="inline-action" onclick="navigate('reviews')"><span data-i18n="see_all_reviews">Ver todas as revisões</span> <i class="fa-solid fa-arrow-right"></i></button>
           </article>
 
           <article class="card-sf">
             <div class="card-title">
               <span class="round-icon blue"><i class="fa-solid fa-chart-column"></i></span>
-              <div><h2>Desempenho da semana</h2><p>Meta diária e revisões</p></div>
+              <div><h2 data-i18n="week_perf_title">Desempenho da semana</h2><p data-i18n="week_perf_sub">Meta diária e revisões</p></div>
               <b class="positive">+12%</b>
             </div>
-            <strong class="big-number"><span id="ov-percent">0%</span> <small>das revisões concluídas</small></strong>
+            <strong class="big-number"><span id="ov-percent">0%</span> <small data-i18n="reviews_done_label">das revisões concluídas</small></strong>
             <div class="progress-sf"><i id="ov-progress-bar" style="width:0%"></i></div>
             <div class="split-stats">
-              <span><b id="ov-meta-display">3/dia</b><small>Meta diária configurada<br />Mantenha o ritmo</small></span>
-              <span><b id="ov-done-ratio">0 / 0</b><small>Revisões concluídas<br />Ciclos ativos</small></span>
+              <span><b id="ov-meta-display">3/dia</b><small><span data-i18n="daily_goal_cfg">Meta diária configurada</span><br /><span data-i18n="keep_pace">Mantenha o ritmo</span></small></span>
+              <span><b id="ov-done-ratio">0 / 0</b><small><span data-i18n="done_reviews_label">Revisões concluídas</span><br /><span data-i18n="active_cycles">Ciclos ativos</span></small></span>
             </div>
           </article>
 
           <article class="card-sf subjects-card">
             <div class="card-title justify-content-between">
-              <div><h2>Minhas disciplinas</h2><p>Acompanhe seu progresso de aprendizado</p></div>
+              <div><h2 data-i18n="my_subjects_title">Minhas disciplinas</h2><p data-i18n="my_subjects_sub">Acompanhe seu progresso de aprendizado</p></div>
               <div class="card-actions">
-                <button class="btn-sf outline compact" onclick="navigate('disciplines')"><i class="fa-solid fa-pen"></i> Gerenciar</button>
+                <button class="btn-sf outline compact" onclick="navigate('disciplines')"><i class="fa-solid fa-pen"></i> <span data-i18n="manage_btn">Gerenciar</span></button>
               </div>
             </div>
             <div id="ov-subjects-list"></div>
-            <button class="inline-action right" onclick="navigate('disciplines')">Ver todas as disciplinas <i class="fa-solid fa-arrow-right"></i></button>
+            <button class="inline-action right" onclick="navigate('disciplines')"><span data-i18n="see_all_subjects">Ver todas as disciplinas</span> <i class="fa-solid fa-arrow-right"></i></button>
           </article>
         </div>
       </div>
@@ -207,12 +207,12 @@
       <div id="page-disciplines" class="app-page" style="display:none;">
         <div class="page-heading">
           <div>
-            <p class="overline">Organização</p>
-            <h1>Minhas disciplinas</h1>
-            <p>Gerencie matérias, tópicos e ciclos de revisão.</p>
+            <p class="overline" data-i18n="org_overline">Organização</p>
+            <h1 data-i18n="my_subjects_title">Minhas disciplinas</h1>
+            <p data-i18n="subjects_page_sub">Gerencie matérias, tópicos e ciclos de revisão.</p>
           </div>
           <div class="heading-actions">
-            <button class="btn-sf primary" onclick="openDisciplineModal()"><i class="fa-solid fa-plus"></i> Nova disciplina</button>
+            <button class="btn-sf primary" onclick="openDisciplineModal()"><i class="fa-solid fa-plus"></i> <span data-i18n="new_discipline">Nova disciplina</span></button>
           </div>
         </div>
         <div id="disciplines-grid" class="discipline-grid"></div>
@@ -222,28 +222,28 @@
       <div id="page-reviews" class="app-page" style="display:none;">
         <div class="page-heading">
           <div>
-            <p class="overline">Revisão espaçada</p>
-            <h1>Fila de revisões</h1>
-            <p>Revise no momento certo para transformar estudo em memória de longo prazo.</p>
+            <p class="overline" data-i18n="spaced_rev_overline">Revisão espaçada</p>
+            <h1 data-i18n="reviews_queue_title">Fila de revisões</h1>
+            <p data-i18n="reviews_queue_sub">Revise no momento certo para transformar estudo em memória de longo prazo.</p>
           </div>
           <div class="heading-actions">
-            <button class="btn-sf primary" onclick="navigate('flashcards')"><i class="fa-regular fa-clone"></i> Acessar flashcards</button>
+            <button class="btn-sf primary" onclick="navigate('flashcards')"><i class="fa-regular fa-clone"></i> <span data-i18n="access_flashcards">Acessar flashcards</span></button>
           </div>
         </div>
 
         <div class="filter-bar card-sf">
-          <label>Disciplina
-            <select id="filter-rev-disc" onchange="renderReviews()"><option value="Todas">Todas</option></select>
+          <label><span data-i18n="filter_subject">Disciplina</span>
+            <select id="filter-rev-disc" onchange="renderReviews()"><option value="Todas" data-i18n="all_option">Todas</option></select>
           </label>
-          <label>Status
+          <label><span data-i18n="filter_status">Status</span>
             <select id="filter-rev-status" onchange="renderReviews()">
-              <option value="Todos">Todos</option>
-              <option value="Atrasado">Atrasado</option>
-              <option value="Hoje">Hoje</option>
-              <option value="Pendente">Pendente</option>
+              <option value="Todos" data-i18n="all_status_option">Todos</option>
+              <option value="Atrasado" data-i18n="status_late">Atrasado</option>
+              <option value="Hoje" data-i18n="status_today">Hoje</option>
+              <option value="Pendente" data-i18n="status_pending">Pendente</option>
             </select>
           </label>
-          <button class="btn-sf outline history-shortcut" onclick="navigate('history')"><i class="fa-regular fa-clock"></i> Histórico de estudos</button>
+          <button class="btn-sf outline history-shortcut" onclick="navigate('history')"><i class="fa-regular fa-clock"></i> <span data-i18n="study_history_btn">Histórico de estudos</span></button>
         </div>
 
         <div id="reviews-list" class="review-list"></div>
@@ -253,12 +253,12 @@
       <div id="page-flashcards" class="app-page" style="display:none;">
         <div class="page-heading">
           <div>
-            <p class="overline">Memorização ativa</p>
-            <h1>Central de flashcards</h1>
-            <p>Crie cartões de estudo e revise os conceitos essenciais das suas disciplinas.</p>
+            <p class="overline" data-i18n="active_mem_overline">Memorização ativa</p>
+            <h1 data-i18n="flashcards_hub_title">Central de flashcards</h1>
+            <p data-i18n="flashcards_hub_sub">Crie cartões de estudo e revise os conceitos essenciais das suas disciplinas.</p>
           </div>
           <div class="heading-actions">
-            <button class="btn-sf outline" onclick="navigate('reviews')"><i class="fa-regular fa-calendar"></i> Fila de revisões</button>
+            <button class="btn-sf outline" onclick="navigate('reviews')"><i class="fa-regular fa-calendar"></i> <span data-i18n="reviews_queue_title">Fila de revisões</span></button>
           </div>
         </div>
 
@@ -266,30 +266,30 @@
           <form class="card-sf flashcard-form" onsubmit="addFlashcard(event)">
             <div class="settings-title">
               <span class="round-icon blue"><i class="fa-solid fa-plus"></i></span>
-              <div><h2>Novo flashcard</h2><p>Adicione uma pergunta e a resposta.</p></div>
+              <div><h2 data-i18n="new_flashcard_title">Novo flashcard</h2><p data-i18n="new_flashcard_sub">Adicione uma pergunta e a resposta.</p></div>
             </div>
-            <label>Disciplina
+            <label><span data-i18n="filter_subject">Disciplina</span>
               <select id="fc-disc-select" required></select>
             </label>
-            <label>Pergunta
+            <label><span data-i18n="question_label">Pergunta</span>
               <textarea id="fc-question" required placeholder="Ex.: O que é uma chave primária?"></textarea>
             </label>
-            <label>Resposta
+            <label><span data-i18n="answer_label">Resposta</span>
               <textarea id="fc-answer" required placeholder="Digite a resposta que aparecerá no verso do cartão."></textarea>
             </label>
-            <button class="btn-sf primary full" type="submit"><i class="fa-solid fa-plus"></i> Salvar flashcard</button>
+            <button class="btn-sf primary full" type="submit"><i class="fa-solid fa-plus"></i> <span data-i18n="save_flashcard_btn">Salvar flashcard</span></button>
           </form>
 
           <section class="flashcard-library">
             <div class="library-heading">
-              <div><h2>Seus flashcards</h2><p id="fc-count">0 cartões disponíveis</p></div>
+              <div><h2 data-i18n="your_flashcards_title">Seus flashcards</h2><p id="fc-count">0 cartões disponíveis</p></div>
               <div class="flash-filters">
-                <select id="fc-filter-disc" onchange="renderFlashcards()"><option value="Todas">Todas</option></select>
+                <select id="fc-filter-disc" onchange="renderFlashcards()"><option value="Todas" data-i18n="all_option">Todas</option></select>
                 <select id="fc-filter-level" onchange="renderFlashcards()">
-                  <option value="Todos">Todos os níveis</option>
-                  <option value="Novo">Novo</option>
-                  <option value="Em revisão">Em revisão</option>
-                  <option value="Dominado">Dominado</option>
+                  <option value="Todos" data-i18n="all_levels_option">Todos os níveis</option>
+                  <option value="Novo" data-i18n="level_new">Novo</option>
+                  <option value="Em revisão" data-i18n="level_review">Em revisão</option>
+                  <option value="Dominado" data-i18n="level_mastered">Dominado</option>
                 </select>
               </div>
             </div>
@@ -302,12 +302,12 @@
       <div id="page-history" class="app-page" style="display:none;">
         <div class="page-heading">
           <div>
-            <p class="overline">Registro de aprendizagem</p>
-            <h1>Histórico de estudos</h1>
-            <p>Consulte todas as revisões concluídas e acompanhe sua consistência.</p>
+            <p class="overline" data-i18n="history_overline">Registro de aprendizagem</p>
+            <h1 data-i18n="study_history_btn">Histórico de estudos</h1>
+            <p data-i18n="history_sub">Consulte todas as revisões concluídas e acompanhe sua consistência.</p>
           </div>
           <div class="heading-actions">
-            <button class="btn-sf primary" onclick="window.print()"><i class="fa-solid fa-download"></i> Exportar PDF</button>
+            <button class="btn-sf primary" onclick="window.print()"><i class="fa-solid fa-download"></i> <span data-i18n="export_pdf_btn">Exportar PDF</span></button>
           </div>
         </div>
 
@@ -319,7 +319,13 @@
           <div class="table-wrap">
             <table>
               <thead>
-                <tr><th>Data conclusão</th><th>Disciplina</th><th>Tópico</th><th>Ciclo</th><th>Status</th></tr>
+                <tr>
+                  <th data-i18n="th_date">Data conclusão</th>
+                  <th data-i18n="filter_subject">Disciplina</th>
+                  <th data-i18n="th_topic">Tópico</th>
+                  <th data-i18n="th_cycle">Ciclo</th>
+                  <th data-i18n="filter_status">Status</th>
+                </tr>
               </thead>
               <tbody id="history-tbody"></tbody>
             </table>
@@ -331,35 +337,35 @@
       <div id="page-performance" class="app-page" style="display:none;">
         <div class="page-heading">
           <div>
-            <p class="overline">Evolução</p>
-            <h1>Desempenho e estatísticas</h1>
-            <p>Entenda seu ritmo de aprendizagem e ajuste sua rotina com dados.</p>
+            <p class="overline" data-i18n="perf_overline">Evolução</p>
+            <h1 data-i18n="perf_title">Desempenho e estatísticas</h1>
+            <p data-i18n="perf_sub">Entenda seu ritmo de aprendizagem e ajuste sua rotina com dados.</p>
           </div>
-          <button class="btn-sf outline" onclick="navigate('overview')"><i class="fa-solid fa-arrow-left"></i> Voltar à visão geral</button>
+          <button class="btn-sf outline" onclick="navigate('overview')"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back_overview">Voltar à visão geral</span></button>
         </div>
 
         <div class="kpi-grid">
-          <article class="card-sf kpi"><span>Disciplinas ativas</span><b id="perf-discs">0</b><small>cadastradas na conta</small></article>
-          <article class="card-sf kpi"><span>Taxa de conclusão</span><b id="perf-rate">0%</b><small class="positive">Ciclos realizados</small></article>
-          <article class="card-sf kpi"><span>Meta diária</span><b id="perf-meta">3</b><small>revisões por dia</small></article>
-          <article class="card-sf kpi"><span>Revisões concluídas</span><b id="perf-done">0</b><small>no histórico total</small></article>
+          <article class="card-sf kpi"><span data-i18n="kpi_active_discs">Disciplinas ativas</span><b id="perf-discs">0</b><small data-i18n="kpi_registered">cadastradas na conta</small></article>
+          <article class="card-sf kpi"><span data-i18n="kpi_rate">Taxa de conclusão</span><b id="perf-rate">0%</b><small class="positive" data-i18n="kpi_cycles_done">Ciclos realizados</small></article>
+          <article class="card-sf kpi"><span data-i18n="kpi_goal">Meta diária</span><b id="perf-meta">3</b><small data-i18n="kpi_per_day">revisões por dia</small></article>
+          <article class="card-sf kpi"><span data-i18n="done_reviews_label">Revisões concluídas</span><b id="perf-done">0</b><small data-i18n="kpi_total_hist">no histórico total</small></article>
         </div>
 
         <div class="charts-grid">
           <article class="card-sf chart-card">
-            <div class="card-title"><div><h2>Rendimento por disciplina</h2><p>Aproveitamento estimado</p></div></div>
+            <div class="card-title"><div><h2 data-i18n="bar_chart_title">Rendimento por disciplina</h2><p data-i18n="bar_chart_sub">Aproveitamento estimado</p></div></div>
             <div id="perf-bar-chart" class="bar-chart"></div>
           </article>
           <article class="card-sf chart-card">
-            <div class="card-title"><div><h2>Distribuição de status</h2><p>Situação das revisões</p></div></div>
+            <div class="card-title"><div><h2 data-i18n="donut_chart_title">Distribuição de status</h2><p data-i18n="donut_chart_sub">Situação das revisões</p></div></div>
             <div class="donut-wrap">
               <div id="perf-donut" class="donut">
-                <span><b id="perf-donut-val">0%</b><small>concluído</small></span>
+                <span><b id="perf-donut-val">0%</b><small data-i18n="donut_done_lbl">concluído</small></span>
               </div>
               <div class="legend">
-                <span><i class="blue-dot"></i>Concluídas <b id="leg-done">0</b></span>
-                <span><i class="purple-dot"></i>Em dia / Pendentes <b id="leg-pend">0</b></span>
-                <span><i class="red-dot"></i>Em atraso <b id="leg-late">0</b></span>
+                <span><i class="blue-dot"></i><span data-i18n="leg_done_lbl">Concluídas</span> <b id="leg-done">0</b></span>
+                <span><i class="purple-dot"></i><span data-i18n="leg_pend_lbl">Em dia / Pendentes</span> <b id="leg-pend">0</b></span>
+                <span><i class="red-dot"></i><span data-i18n="leg_late_lbl">Em atraso</span> <b id="leg-late">0</b></span>
               </div>
             </div>
           </article>
@@ -370,11 +376,11 @@
       <div id="page-profile" class="app-page" style="display:none;">
         <div class="page-heading">
           <div>
-            <p class="overline">Sua conta</p>
-            <h1>Perfil do Estudante</h1>
-            <p>Atualize seus dados e meta diária de estudo.</p>
+            <p class="overline" data-i18n="profile_overline">Sua conta</p>
+            <h1 data-i18n="profile_title">Perfil do Estudante</h1>
+            <p data-i18n="profile_sub">Atualize seus dados e meta diária de estudo.</p>
           </div>
-          <button class="btn-sf outline" onclick="navigate('overview')"><i class="fa-solid fa-arrow-left"></i> Voltar à visão geral</button>
+          <button class="btn-sf outline" onclick="navigate('overview')"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back_overview">Voltar à visão geral</span></button>
         </div>
 
         <div class="profile-grid">
@@ -383,22 +389,22 @@
             <h2 id="prof-name-card">Estudante</h2>
             <p id="prof-email-card">estudante@saberflow.com</p>
             <div class="profile-stats">
-              <span><b id="prof-stat-discs">0</b>disciplinas</span>
-              <span><b id="prof-stat-meta">3</b>meta/dia</span>
-              <span><b id="prof-stat-done">0</b>revisões</span>
+              <span><b id="prof-stat-discs">0</b><span data-i18n="stat_subjects">disciplinas</span></span>
+              <span><b id="prof-stat-meta">3</b><span data-i18n="stat_goal_day">meta/dia</span></span>
+              <span><b id="prof-stat-done">0</b><span data-i18n="stat_reviews">revisões</span></span>
             </div>
           </article>
 
           <form class="card-sf profile-form" onsubmit="saveProfile(event)">
-            <h2>Informações pessoais</h2>
+            <h2 data-i18n="personal_info_title">Informações pessoais</h2>
             <div class="form-grid">
-              <label>Nome completo<input id="prof-input-name" /></label>
-              <label>E-mail<input id="prof-input-email" disabled /></label>
-              <label>Curso<input value="Análise e Desenvolvimento de Sistemas" /></label>
-              <label>Meta diária de revisões<input id="prof-input-meta" type="number" min="1" max="50" /></label>
+              <label><span data-i18n="full_name_label">Nome completo</span><input id="prof-input-name" /></label>
+              <label><span data-i18n="email_label">E-mail</span><input id="prof-input-email" disabled /></label>
+              <label><span data-i18n="course_label">Curso</span><input value="Análise e Desenvolvimento de Sistemas" /></label>
+              <label><span data-i18n="daily_goal_label">Meta diária de revisões</span><input id="prof-input-meta" type="number" min="1" max="50" /></label>
             </div>
             <div class="save-row">
-              <button class="btn-sf primary" type="submit">Salvar alterações</button>
+              <button class="btn-sf primary" type="submit" data-i18n="save_changes_btn">Salvar alterações</button>
             </div>
           </form>
         </div>
@@ -408,11 +414,11 @@
       <div id="page-settings" class="app-page" style="display:none;">
         <div class="page-heading">
           <div>
-            <p class="overline">Preferências</p>
-            <h1>Configurações</h1>
-            <p>Personalize a aparência, notificações e comportamento do SaberFlow.</p>
+            <p class="overline" data-i18n="settings_overline">Preferências</p>
+            <h1 data-i18n="nav_settings">Configurações</h1>
+            <p data-i18n="settings_sub">Personalize a aparência, notificações e comportamento do SaberFlow.</p>
           </div>
-          <button class="btn-sf outline" onclick="navigate('overview')"><i class="fa-solid fa-arrow-left"></i> Voltar à visão geral</button>
+          <button class="btn-sf outline" onclick="navigate('overview')"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back_overview">Voltar à visão geral</span></button>
         </div>
 
         <div class="settings-grid">
@@ -420,20 +426,20 @@
           <article class="card-sf settings-card">
             <div class="settings-title">
               <span class="round-icon blue"><i class="fa-regular fa-moon"></i></span>
-              <div><h2>Aparência</h2><p>Escolha como o SaberFlow aparece para você.</p></div>
+              <div><h2 data-i18n="appearance_title">Aparência</h2><p data-i18n="appearance_sub">Escolha como o SaberFlow aparece para você.</p></div>
             </div>
             <div class="theme-options">
               <button id="btn-theme-light" class="selected" type="button" onclick="setTheme('light')">
                 <span class="theme-preview light-preview"><i></i><i></i><i></i></span>
-                <b>Tema claro</b><small>Interface clara atual</small>
+                <b data-i18n="theme_light">Tema claro</b><small data-i18n="theme_light_sub">Interface clara atual</small>
               </button>
               <button id="btn-theme-dark" type="button" onclick="setTheme('dark')">
                 <span class="theme-preview dark-preview"><i></i><i></i><i></i></span>
-                <b>Tema escuro</b><small>Confortável à noite</small>
+                <b data-i18n="theme_dark">Tema escuro</b><small data-i18n="theme_dark_sub">Confortável à noite</small>
               </button>
             </div>
             <label class="toggle-line mt-3">
-              <span><b>Visualização compacta</b><small>Reduz o espaçamento dos cartões e tabelas.</small></span>
+              <span><b data-i18n="compact_mode_title">Visualização compacta</b><small data-i18n="compact_mode_sub">Reduz o espaçamento dos cartões e tabelas.</small></span>
               <input id="cfg-compact" type="checkbox" onchange="toggleCompactMode()" />
             </label>
           </article>
@@ -442,14 +448,14 @@
           <article class="card-sf settings-card">
             <div class="settings-title">
               <span class="round-icon blue"><i class="fa-regular fa-bell"></i></span>
-              <div><h2>Notificações</h2><p>Controle os avisos que deseja receber.</p></div>
+              <div><h2 data-i18n="notif_title">Notificações</h2><p data-i18n="notif_sub">Controle os avisos que deseja receber.</p></div>
             </div>
             <label class="toggle-line">
-              <span><b>Lembretes de revisão</b><small>Alertas de revisões próximas ou atrasadas.</small></span>
+              <span><b data-i18n="notif_rev_title">Lembretes de revisão</b><small data-i18n="notif_rev_sub">Alertas de revisões próximas ou atrasadas.</small></span>
               <input id="cfg-notif-rev" type="checkbox" checked onchange="saveSettingsPrefs()" />
             </label>
             <label class="toggle-line">
-              <span><b>Resumo semanal</b><small>Relatório de desempenho toda segunda-feira.</small></span>
+              <span><b data-i18n="notif_week_title">Resumo semanal</b><small data-i18n="notif_week_sub">Relatório de desempenho toda segunda-feira.</small></span>
               <input id="cfg-notif-week" type="checkbox" checked onchange="saveSettingsPrefs()" />
             </label>
           </article>
@@ -458,19 +464,19 @@
           <article class="card-sf settings-card">
             <div class="settings-title">
               <span class="round-icon blue"><i class="fa-solid fa-gear"></i></span>
-              <div><h2>Geral</h2><p>Idioma e preferências da aplicação.</p></div>
+              <div><h2 data-i18n="general_title">Geral</h2><p data-i18n="general_sub">Idioma e preferências da aplicação.</p></div>
             </div>
-            <label class="settings-select-label">Idioma
+            <label class="settings-select-label"><span data-i18n="lang_label">Idioma</span>
               <select id="cfg-lang" onchange="saveSettingsPrefs()">
                 <option value="pt-BR">Português (Brasil)</option>
                 <option value="en-US">English (US)</option>
                 <option value="es">Español</option>
               </select>
             </label>
-            <label class="settings-select-label mt-3">Início da semana
+            <label class="settings-select-label mt-3"><span data-i18n="week_start_label">Início da semana</span>
               <select id="cfg-week-start" onchange="saveSettingsPrefs()">
-                <option value="monday">Segunda-feira</option>
-                <option value="sunday">Domingo</option>
+                <option value="monday" data-i18n="monday_opt">Segunda-feira</option>
+                <option value="sunday" data-i18n="sunday_opt">Domingo</option>
               </select>
             </label>
           </article>
@@ -479,75 +485,14 @@
           <article class="card-sf settings-card">
             <div class="settings-title">
               <span class="round-icon blue"><i class="fa-solid fa-shield-halved"></i></span>
-              <div><h2>Privacidade e conta</h2><p>Gerencie seus dados e sua sessão.</p></div>
+              <div><h2 data-i18n="privacy_title">Privacidade e conta</h2><p data-i18n="privacy_sub">Gerencie seus dados e sua sessão.</p></div>
             </div>
             <button type="button" class="settings-line" onclick="openPasswordModal()">
-              <span><b>Alterar senha</b><small>Atualize sua credencial de acesso.</small></span>
+              <span><b data-i18n="change_pass_title">Alterar senha</b><small data-i18n="change_pass_sub">Atualize sua credencial de acesso.</small></span>
               <i class="fa-solid fa-arrow-right"></i>
             </button>
             <button type="button" class="settings-line" onclick="exportDataJSON()">
-              <span><b>Baixar meus dados</b><small>Baixe uma cópia em JSON das suas informações.</small></span>
+              <span><b data-i18n="download_data_title">Baixar meus dados</b><small data-i18n="download_data_sub">Baixe uma cópia em JSON das suas informações.</small></span>
               <i class="fa-solid fa-download"></i>
             </button>
           </article>
-        </div>
-      </div>
-
-    </section>
-  </main>
-
-  <!-- NOVA / EDITAR DISCIPLINA -->
-  <div id="modal-discipline" class="modal-backdrop" style="display:none;" onclick="closeDisciplineModal()">
-    <form class="modal-sf" onsubmit="saveDiscipline(event)" onclick="event.stopPropagation()">
-      <div class="modal-heading">
-        <div>
-          <p class="overline" id="modal-disc-overline">NOVA DISCIPLINA</p>
-          <h2 id="modal-disc-title">Cadastro de estudo</h2>
-        </div>
-        <button type="button" onclick="closeDisciplineModal()">×</button>
-      </div>
-      <label>Nome da disciplina
-        <input id="modal-disc-name" required placeholder="Ex.: Banco de Dados" />
-      </label>
-      <label>Assunto / Tópico
-        <input id="modal-topic-name" required placeholder="Ex.: Modelagem e SQL" />
-      </label>
-      <label>Data do estudo inicial
-        <input id="modal-study-date" type="date" required />
-      </label>
-      <fieldset>
-        <legend>Ciclos de revisão automáticos (selecione):</legend>
-        <div class="cycle-options">
-          <label><input type="checkbox" name="ciclo-opt" value="1" checked /> 24h</label>
-          <label><input type="checkbox" name="ciclo-opt" value="7" checked /> 7d</label>
-          <label><input type="checkbox" name="ciclo-opt" value="15" checked /> 15d</label>
-          <label><input type="checkbox" name="ciclo-opt" value="30" checked /> 30d</label>
-        </div>
-      </fieldset>
-      <div class="modal-actions">
-        <button class="btn-sf outline" type="button" onclick="closeDisciplineModal()">Cancelar</button>
-        <button class="btn-sf primary" type="submit" id="modal-disc-submit">Salvar e agendar revisões</button>
-      </div>
-    </form>
-  </div>
-
-  <!--  ALTERAR SENHA -->
-  <div id="modal-password" class="modal-backdrop" style="display:none;" onclick="closePasswordModal()">
-    <form class="modal-sf" onsubmit="submitChangePassword(event)" onclick="event.stopPropagation()">
-      <div class="modal-heading">
-        <div><p class="overline">SEGURANÇA</p><h2>Alterar senha</h2></div>
-        <button type="button" onclick="closePasswordModal()">×</button>
-      </div>
-      <label>Nova senha (mínimo 6 caracteres)
-        <input id="modal-new-pass" type="password" minlength="6" required placeholder="Digite a nova senha" />
-      </label>
-      <div class="modal-actions">
-        <button class="btn-sf outline" type="button" onclick="closePasswordModal()">Cancelar</button>
-        <button class="btn-sf primary" type="submit">Salvar nova senha</button>
-      </div>
-    </form>
-  </div>
-
-  <script src="app.js"></script>
-</body>
-</html>

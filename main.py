@@ -18,7 +18,7 @@ engine = create_engine(
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
-# --- MODELOS (DER) ---
+# --- MODELOS ---
 class Usuario(Base):
     __tablename__ = "usuarios"
     id = Column(Integer, primary_key=True, index=True)
@@ -185,7 +185,7 @@ def editar_disciplina(disc_id: int, dados: DisciplinaUpdateSchema, db: Session =
         topico.titulo = dados.topico_titulo
         topico.data_estudo_inicial = data_base
 
-        # Atualiza ciclos pendentes conforme seleção
+        # ATUALIZA CICLOS PENDENTES 
         ciclos_existentes = {c.intervalo_dias: c for c in topico.ciclos}
         for dias, ciclo_obj in list(ciclos_existentes.items()):
             if dias not in dados.ciclos and ciclo_obj.status == "Pendente":
