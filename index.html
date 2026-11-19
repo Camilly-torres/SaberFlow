@@ -286,7 +286,7 @@
               <div class="flash-filters">
                 <select id="fc-filter-disc" onchange="renderFlashcards()"><option value="Todas" data-i18n="all_option">Todas</option></select>
                 <select id="fc-filter-level" onchange="renderFlashcards()">
-                  <option value="Todos" data-i18n="all_levels_option">Todos os níveis</option>
+                  <option value="Todos" data-i18n="all_levels_option">Todos os niveles</option>
                   <option value="Novo" data-i18n="level_new">Novo</option>
                   <option value="Em revisão" data-i18n="level_review">Em revisão</option>
                   <option value="Dominado" data-i18n="level_mastered">Dominado</option>
@@ -372,7 +372,7 @@
         </div>
       </div>
 
-      <!--  PERFIL -->
+      <!-- PERFIL -->
       <div id="page-profile" class="app-page" style="display:none;">
         <div class="page-heading">
           <div>
@@ -410,13 +410,13 @@
         </div>
       </div>
 
-      <!--  CONFIGURAÇÕES -->
+      <!-- CONFIGURAÇÕES -->
       <div id="page-settings" class="app-page" style="display:none;">
         <div class="page-heading">
           <div>
             <p class="overline" data-i18n="settings_overline">Preferências</p>
             <h1 data-i18n="nav_settings">Configurações</h1>
-            <p data-i18n="settings_sub">Personalize a aparência, notificações e comportamento do SaberFlow.</p>
+            <p data-i18n="settings_sub">Personalize a aparência, notificações e comportamiento do SaberFlow.</p>
           </div>
           <button class="btn-sf outline" onclick="navigate('overview')"><i class="fa-solid fa-arrow-left"></i> <span data-i18n="back_overview">Voltar à visão geral</span></button>
         </div>
@@ -496,3 +496,71 @@
               <i class="fa-solid fa-download"></i>
             </button>
           </article>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- MODAL NOVA / EDITAR DISCIPLINA -->
+  <div id="modal-discipline" class="modal-backdrop" style="display:none;">
+    <div class="modal-sf">
+      <div class="modal-heading">
+        <div>
+          <p class="overline" id="modal-disc-overline">NOVA DISCIPLINA</p>
+          <h2 id="modal-disc-title">Cadastro de estudo</h2>
+        </div>
+        <button type="button" onclick="closeDisciplineModal()">×</button>
+      </div>
+      <form onsubmit="saveDiscipline(event)">
+        <label><span data-i18n="disc_name_label">Nome da disciplina</span>
+          <input id="modal-disc-name" required placeholder="Ex.: Cálculo I, Direito Constitucional..." />
+        </label>
+        <label><span data-i18n="topic_name_label">Assunto / Tópico</span>
+          <input id="modal-topic-name" required placeholder="Ex.: Limites e continuidade" />
+        </label>
+        <label><span data-i18n="initial_date_label">Data do estudo inicial</span>
+          <input id="modal-study-date" type="date" required />
+        </label>
+        <fieldset class="cycles-box">
+          <legend data-i18n="cycles_legend">Ciclos de revisão automáticos (selecione):</legend>
+          <div class="cycles-grid">
+            <label><input type="checkbox" name="ciclo-opt" value="1" checked /> 1 dia</label>
+            <label><input type="checkbox" name="ciclo-opt" value="7" checked /> 7 dias</label>
+            <label><input type="checkbox" name="ciclo-opt" value="15" checked /> 15 dias</label>
+            <label><input type="checkbox" name="ciclo-opt" value="30" checked /> 30 dias</label>
+          </div>
+        </fieldset>
+        <div class="modal-actions">
+          <button type="button" class="btn-sf outline" onclick="closeDisciplineModal()" data-i18n="cancel_btn">Cancelar</button>
+          <button type="submit" class="btn-sf primary" id="modal-disc-submit" data-i18n="save_schedule_btn">Salvar e agendar revisões</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL ALTERAR SENHA -->
+  <div id="modal-password" class="modal-backdrop" style="display:none;">
+    <div class="modal-sf">
+      <div class="modal-heading">
+        <div>
+          <p class="overline" data-i18n="security_overline">SEGURANÇA</p>
+          <h2 data-i18n="change_pass_title">Alterar senha</h2>
+        </div>
+        <button type="button" onclick="closePasswordModal()">×</button>
+      </div>
+      <form onsubmit="submitChangePassword(event)">
+        <label><span data-i18n="new_pass_min6">Nova senha (mínimo 6 caracteres)</span>
+          <input id="modal-new-pass" type="password" minlength="6" required />
+        </label>
+        <div class="modal-actions">
+          <button type="button" class="btn-sf outline" onclick="closePasswordModal()" data-i18n="cancel_btn">Cancelar</button>
+          <button type="submit" class="btn-sf primary" data-i18n="save_new_pass_btn">Salvar nova senha</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
